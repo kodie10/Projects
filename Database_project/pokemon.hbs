@@ -1,0 +1,132 @@
+{{!Citation for the following page
+Date: 11/2/2022
+Adapted From:
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app}}
+
+<!-- pokemon.hbs -->
+<link rel="stylesheet" href="./css/style.css">
+<h1 class="heading">Pokemon</h1>
+  <div class="nav-bar">
+            <a href="/">Home</a>
+            <a href="pokemon.hbs">Pokemon</a>
+            <a href="trainers.hbs">Trainers</a>
+            <a href="types.hbs">Types</a>
+            <a href="attacks.hbs">Attacks</a>
+            <a href="learned_attacks.hbs">Learned Attacks</a>
+          </div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="./js/pokemon.js"></script>
+{{!-- Create a table --}}
+<table id="Pokemon-table" class="main-table">
+
+    {{!-- Header section --}}
+    <thead>
+        <th>Pokemon ID</th>
+        <th>Name</th>
+        <th>Nickname</th>
+        <th>Level</th>
+        <th>Trainer ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Type</th>
+        <th>Delete</th>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the pokemon_id, name, nickname, trainer_id, trainer first name, trainer last name, and type in order --}}
+        {{#each data}}
+        <tr data-value={{this.pokemon_id}}>
+            <td>{{this.pokemon_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.nickname}}</td>
+            <td>{{this.level}}</td>
+            <td>{{this.trainer_id}}</td>
+            <td>{{this.f_name}}</td>
+            <td>{{this.l_name}}</td>
+            <td>{{this.type}}</td>
+            <td><button onclick="deletePokemon({{this.pokemon_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{!-- script to hide/show form for updating record --}}
+ <script type="text/javascript">
+        function show(pokemonID) {
+            document.getElementById("update-pokemon-form").style.display= "block";
+        }
+    </script>
+
+{{!-- Form to add a record to the table  --}}
+<form id="add-pokemon-form" method="POST" action="/add-pokemon-form">
+<legend>To add a new Pokemon, please enter their information below and click `Submit`!</legend>
+<p> * = input required </p>
+    <fieldset>
+    <label for="input-pokemon-name" required>Name:* </label>
+    <input type="text" name="input-pokemon-name" id="input-pokemon-name" required> 
+    
+    <label for="input-pokemon-nickname">Nickname: </label>
+    <input type="text" name="input-pokemon-nickname" id="input-pokemon-nickname">
+    <label>Trainer Name*</label><select name="input-pokemon-trainer" id="input-pokemon-trainer" required>
+        {{#each trainers}}
+        <option value="{{this.trainer_id}}">{{this.f_name}} {{this.l_name}}</option>
+        {{/each}}
+    </select>
+    <label>Type*</label><select name="input-pokemon-type" id="input-pokemon-type" required>
+        {{#each type}}
+        <option value="{{this.type_id}}">{{this.type}}</option>
+        {{/each}}
+    </select>
+    <label for="input-pokemon-level">Level:* </label>
+    <input type="number" min='1' max='99' placeholder='1-99' name="input-pokemon-level" id="input-pokemon-level" required>
+    </fieldset>
+    <input class="button-center" type="submit" value="Submit">
+</form>
+
+
+<p> To update a Pokemon click 'Update' </p>
+{{!-- form to update the record --}}
+    <td><button class="button-center" onclick="show({{this.pokemon_id}})">Update</button></td>
+<form id="update-pokemon-form" method="POST" action="/update-pokemon-form" style="display: none">
+<legend>Updating A Pokemons Information</legend>
+<legend>Fill out the form to update</legend>
+<p> * = input required </p>
+<fieldset>
+    <label>Pokemon ID and Name*</label><select name="input-pokemon-update" id="input-pokemon-update" required>
+        {{#each name}}
+        <option value="{{this.pokemon_id}}">{{this.pokemon_id}} {{this.name}}</option>
+        {{/each}}
+        </select>
+        <label for="input-nickname-update">Nickname: </label>
+        <input type="text" name="input-nickname-update" id="input-nickname-update">
+        <label>Trainer Name*</label><select name="input-trainer-update" id="input-trainer-update">
+        <option value=''>NULL </option>
+        {{#each trainers}}
+        <option value="{{this.trainer_id}}">{{this.f_name}} {{this.l_name}}</option>
+        {{/each}}
+        </select>
+        <label>Type*</label><select name="input-type-update" id="input-type-update" required>
+        {{#each type}}
+        <option value="{{this.type_id}}">{{this.type}}</option>
+        {{/each}}
+
+    </select>
+        <label for="input-level-update">Level:* </label>
+        <input type="number" min='1' max='99' placeholder='1-99' name="input-level-update" id="input-level-update" required>
+    </fieldset>
+    <input class="button-center" type="submit" value="Submit">
+</form>
+
+{{!-- Images --}}
+<div id="img-left">
+    <img src="./images/2pokemon-left.png" alt="pokemon image" width="250px" height="200px">
+</div>
+
+<div id="pokemon-img-right">
+    <img src="./images/2pokemon-right.png" alt="pokemon image" width="250px" height="200px">
+</div>
+
+<footer>
+    <p>© 2022 Kodie Artmayer, Mahnoor Mansoor </p>
+</footer>
