@@ -1,0 +1,100 @@
+{{!Citation for the following page
+Date: 11/2/2022
+Adapted From:
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app}}
+
+<!-- Learned_Attacks.hbs -->
+<link rel="stylesheet" href="./css/style.css">
+<h1 class="heading">Learned Attacks</h1>
+  <div class="nav-bar">
+            <a href="/">Home</a>
+            <a href="pokemon.hbs">Pokemon</a>
+            <a href="trainers.hbs">Trainers</a>
+            <a href="types.hbs">Types</a>
+            <a href="attacks.hbs">Attacks</a>
+            <a href="learned_attacks.hbs">Learned Attacks</a>
+          </div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="./js/learned_attacks.js"></script>
+{{!-- Create a table --}}
+<table id="Learned_Attacks-table" class="main-table">
+
+    {{!-- Header section --}}
+    <thead>
+        <th>Table ID </th>
+        <th>Pokemon ID</th>
+        <th>Name</th>
+        <th>Attack Name</th>
+        <th>Delete</th>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the id, fname, lname, hometown, in order --}}
+        {{#each data}}
+        <tr data-value={{this.learned_attacks_id}}>
+            <td>{{this.learned_attacks_id}}
+            <td>{{this.pokemon_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.atkname}}</td>
+            <td><button onclick="deleteLearnedAttack({{this.learned_attacks_id}})" onclick="editDropdown({{this.pokemon_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{!-- script to hide/show form for updating record --}}
+    <script type="text/javascript">
+        function show(pokemonID) {
+            document.getElementById("update-la-form").style.display= "block";
+        }
+    </script>
+{{!-- Form to add a record to the table  --}}
+<h3>Teach a Pokemon a new attack</h3>
+<form id="add-Learned_Attack-form" method="POST" action="/add-Learned_Attack-form">
+<legend>To add a new attack, select a Pokemon and an Attack and click `Submit`!</legend>
+<p> * = input required </p>
+<fieldset>
+    <label>Pokemon ID and Name*</label><select name="input-pokemonla" id="input-pokemonla">
+        {{#each name}}
+        <option value="{{this.pokemon_id}}">{{this.pokemon_id}} {{this.name}}</option>
+        {{/each}}
+        </select>
+        <label>Attack Name*</label><select name="input-attackla" id="input-attackla">
+        {{#each atkname}}
+        <option value="{{this.attack_id}}">{{this.atkname}}</option>
+        {{/each}}
+    </select>
+</fieldset>
+    <input class="button-center" type="submit" value="Submit">
+</form>
+
+<p> To update an attack click 'Update'</p>
+{{!-- form to update the record --}}
+<td><button class="button-center" onclick="show({{this.pokemon_id}})">Update</button></td>
+<form id="update-la-form" method="POST" action="/update-la-form" style="display: none">
+<legend>Updating A Pokemons Attack</legend>
+<p>To update a Pokemons known Attack pick a new one from the drop down</p>
+<p> * = input required </p>
+<fieldset>
+    <label>Table ID, Pokemon ID and Name*</label><select name="input-pokemonula-update" id="input-pokemonula-update">
+        {{#each learned_attacks_id}}
+        <option value="{{this.learned_attacks_id}}">{{this.learned_attacks_id}}, {{this.pokemon_id}} {{this.name}}</option>
+        {{/each}}
+        </select>
+        <label>Attack Name*</label><select name="input-attack-update" id="input-attack-update">
+        {{#each atkname}}
+        <option value="{{this.attack_id}}">{{this.atkname}}</option>
+        {{/each}}
+    </select>
+</fieldset>
+    <input class="button-center" type="submit" value="Submit">
+</form>
+
+</form>
+
+<footer>
+    <p>© 2022 Kodie Artmayer, Mahnoor Mansoor </p>
+</footer>
+
+<script src="./js/update_Learned_Attacks.js"></script>

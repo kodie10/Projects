@@ -1,0 +1,114 @@
+{{!Citation for the following page
+Date: 11/2/2022
+Adapted From:
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app}}
+
+<!-- attacks.hbs -->
+<link rel="stylesheet" href="./css/style.css">
+<h1 class="heading">Attacks</h1>
+  <div class="nav-bar">
+            <a href="/">Home</a>
+            <a href="pokemon.hbs">Pokemon</a>
+            <a href="trainers.hbs">Trainers</a>
+            <a href="types.hbs">Types</a>
+            <a href="attacks.hbs">Attacks</a>
+            <a href="learned_attacks.hbs">Learned Attacks</a>
+          </div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="./js/attacks.js"></script>
+
+{{!-- Create a table --}}
+<table id="Attacks-table" class="main-table">
+
+    {{!-- Header section --}}
+    <thead>
+        <th>Attack ID</th>
+        <th>Name</th>
+        <th>Attack Power</th>
+        <th>Power Points</th>
+        <th>Type</th>
+        <th>Delete</th>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the attack_id, name, atkpower, powerpoints, and type in order --}}
+        {{#each data}}
+        <tr data-value={{this.attack_id}}>
+            <td>{{this.attack_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.atk_power}}</td>
+            <td>{{this.power_points}}</td>
+            <td>{{this.type}}</td>
+            <td><button onclick="deleteAttack({{this.attack_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- script to hide/show form for updating record --}}
+<script type="text/javascript">
+        function show(attackID) {
+            document.getElementById("update-attacks-form").style.display= "block";
+        }
+</script>
+
+{{!-- Form to add a record to the table  --}}
+<form id="add-attacks-form" method="POST" action="/add-attacks-form">
+<legend>To add a new attack, please enter the information below and click `Submit`!</legend>
+<p> * = input required </p>
+<fieldset>
+    <label for="input-attack-name">Name:* </label>
+    <input type="text" name="input-attack-name" id="input-attack-name" required>
+    
+    <label for="input-atk_power">Attack Power:* </label>
+    <input type="number" min='5' max='250' placeholder='5-250' name="input-atk_power" id="input-atk_power" required>
+
+    <label for="input-power_points">Power Points:* </label>
+    <input type="number" min='5' max='35' placeholder='5-35' name="input-power_points" id="input-power_points" required>
+    <label>Type:
+        <select name="input-attack-type" id="input-attack-type" required>
+        {{#each type}}
+        <option value="{{this.type_id}}">{{this.type}}</option>
+        {{/each}}
+        </select>
+    </label>
+</fieldset>
+    <input class="button-center" type="submit" value="Submit">
+</form>
+{{!-- form to update the record --}}
+<p> To update an attack click 'Update'</p>
+<td><button class="button-center" onclick="show({{this.attack_id}})">Update</button></td>
+<form id="update-attacks-form" method="POST" action="/update-attacks-form" style="display: none">
+<legend>Updating A Pokemons Attack</legend>
+<p>Fill out the form to update</p>
+<p> * = input required </p>
+<fieldset>
+        <label>Attack</label><select name="input-attack-update" id="input-attack-update" required>
+        {{#each atkname}}
+        <option value="{{this.attack_id}}"> {{this.atkname}}</option>
+        {{/each}}
+        </select>
+
+        <label for="input-atk_power-update">Attack Power:* </label>
+        <input type="number" min='5' max='250' placeholder='5-250' name="input-atk_power-update" id="input-atk_power-update" required>
+
+        <label for="input-power_points-update">Power Points:* </label>
+        <input type="number" min='5' max='35' placeholder='5-35' name="input-power_points-update" id="input-power_points-update" required>
+</fieldset>
+    <input class="button-center" type="submit" value="Submit">
+</form>
+
+{{!-- Images --}}
+<div id="attack-img-right">
+    <img src="./images/attack2.png" alt="attack image" width="350px" height="150px">
+</div>
+
+<div id="attack-img-left">
+    <img src="./images/attack1.png" alt="attack image" width="300px" height="250px">
+</div>
+
+<footer>
+    <p>© 2022 Kodie Artmayer, Mahnoor Mansoor </p>
+</footer>

@@ -1,0 +1,112 @@
+{{!Citation for the following page
+Date: 11/6/2022
+Adapted From:
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app}}
+
+<!-- types.hbs -->
+<link rel="stylesheet" href="./css/style.css">
+<h1 class="heading">Types</h1>
+  <div class="nav-bar">
+            <a href="/">Home</a>
+            <a href="pokemon.hbs">Pokemon</a>
+            <a href="trainers.hbs">Trainers</a>
+            <a href="types.hbs">Types</a>
+            <a href="attacks.hbs">Attacks</a>
+            <a href="learned_attacks.hbs">Learned Attacks</a>
+          </div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="./js/types.js"></script>
+{{!-- Create a table --}}
+<table id="Types-table" class="main-table">
+
+    {{!-- Header section --}}
+    <thead>
+        <th>Type ID</th>
+        <th>Name</th>
+        <th>Super Effective</th>
+        <th>Weakness</th>
+        <th>No Effect</th>
+        <th>Delete</th>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+
+        {{!-- For each row, print the type_id, name, supereffective, weakness, and no effect in order --}}
+        {{#each data}}
+        <tr data-value={{this.type_id}}>
+            <td>{{this.type_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.super_effective}}</td>
+            <td>{{this.weakness}}</td>
+            <td>{{this.no_effect}}</td>
+            <td><button onclick="deleteType({{this.type_id}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+{{!-- script to hide/show the update form --}}
+<script type="text/javascript">
+        function show(typeID) {
+            document.getElementById("update-type-form").style.display= "block";
+        }
+</script>
+
+{{!-- form to add a new type --}}
+<form id="add-types-form" method="POST" action="/add-types-form">
+<legend>To add a new type, please enter the information below and click `Submit`!</legend>
+<p> * = input required </p>
+<fieldset>
+    <label for="input-type-name">Name:* </label>
+    <input type="text" name="input-type-name" id="input-type-name" required>
+    
+    <label for="input-super_effective">Super Effective:* </label>
+    <input type="text" name="input-super_effective" id="input-super_effective" required>
+
+    <label for="input-weakness">Weakness:* </label>
+    <input type="text" name="input-weakness" id="input-weakness" required>
+
+    <label for="input-no_effect">No Effect: </label>
+    <input type="text" name="input-no_effect" id="input-no_effect">
+</fieldset>
+    <input class="button-center" type="submit" value='Submit'>
+</form>
+
+{{!-- form to update a type --}}
+<p> To Update a Type click 'Update' </p>
+<td><button class="button-center" onclick="show({{this.type_id}})">Update</button></td>
+<form id="update-type-form" method="POST" action="/update-type-form" style="display: none">
+<legend>Updating A Pokemons Type</legend>
+<p>Fill out the form to update</p>
+<p> * = input required </p>
+<fieldset>
+        <label>Type*</label><select name="input-type-update" id="input-type-update" required>
+        {{#each type}}
+        <option value="{{this.type_id}}"> {{this.type}}</option>
+        {{/each}}
+        </select>
+
+        <label for="input-super_effective-update">Super Effective:* </label>
+        <input type="text" name="input-super_effective-update" id="input-super_effective-update" required>
+
+        <label for="input-weakness-update">Weakness:* </label>
+        <input type="text" name="input-weakness-update" id="input-weakness-update" required>
+
+        <label for="input-no_effect-update">No Effect: </label>
+        <input type="text" name="input-no_effect-update" id="input-no_effect-update">
+    </fieldset>
+    <input class="button-center" type="submit" value="Submit">
+</form>
+
+{{!-- Images --}}
+<div id="img-left">
+    <img src="./images/left-types.png" alt="types image" width="200px" height="250px"> 
+</div>
+
+<div id="type-img-right">
+    <img src="./images/right-types.png" alt="types image" width="200px" height="250px"> 
+</div>
+
+<footer>
+    <p>© 2022 Kodie Artmayer, Mahnoor Mansoor </p>
+</footer>
